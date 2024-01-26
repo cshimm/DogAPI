@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dog api</title>
+</head>
+<body>
+<ul id="breedsList">
+    <% breeds.forEach((breed) => { %>
+        <li data-breed='<%= JSON.stringify(breed.attributes) %>'><%= breed.attributes.name %></li>
+    <% });%>
+</ul>
+<h1 id="breed-name"></h1>
+<p id="breed-desc"></p>
+<script type="text/javascript">
+    document.getElementById('breedsList').addEventListener('click', function(event) {
+        const breedData = event.target.getAttribute('data-breed');
+        onBreedClicked(breedData);
+    });
+
+    function onBreedClicked(breedData) {
+        const {name, description} = JSON.parse(breedData);
+        document.getElementById('breed-name').innerHTML = name;
+        document.getElementById('breed-desc').innerHTML = description;
+    }
+</script>
+</body>
+</html>
