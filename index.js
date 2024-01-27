@@ -5,45 +5,57 @@ const port = process.env.PORT || 3000;
 app.set('port', port);
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-    res.type('text/html');
-    res.status(200);
-    fetchAllBreeds()
-        .then(data => {
-            const breeds = data.data
-            return res.render('breeds', {breeds});
-        })
-        .catch(e => console.log(e));
+    try {
+        res.type('text/html');
+        res.status(200);
+        fetchAllBreeds()
+            .then(data => {
+                const breeds = data.data
+                return res.render('breeds', {breeds});
+            });
+    } catch (e) {
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 app.get('/breeds/:id', (req, res) => {
-    res.type('text/html');
-    res.status(200);
-    fetchBreedById(req.params.id)
-        .then(data => {
-            const breed = data.data;
-            console.log(breed);
-            res.render('breed', {breed});
-        }).catch(e => console.log(e));
+    try {
+        res.type('text/html');
+        res.status(200);
+        fetchBreedById(req.params.id)
+            .then(data => {
+                const breed = data.data;
+                res.render('breed', {breed});
+            });
+    } catch (e) {
+        res.status(500).send('Internal Server Error');
+    }
 });
 app.get('/breeds', (req, res) => {
-    res.type('text/html');
-    res.status(200);
-    fetchAllBreeds()
-        .then(data => {
-            const breeds = data.data;
-            return res.render('breeds', {breeds})
-        })
-        .catch(e => console.log(e));
+    try {
+        res.type('text/html');
+        res.status(200);
+        fetchAllBreeds()
+            .then(data => {
+                const breeds = data.data;
+                return res.render('breeds', {breeds})
+            });
+    } catch (e) {
+        res.status(500).send('Internal Server Error');
+    }
 });
 app.get('/facts', (req, res) => {
-    res.type('text/html');
-    res.status(200);
-    fetchFacts()
-        .then(data => {
-            const facts = data.data;
-            return res.render('facts', {facts});
-        })
-        .catch(e => console.log(e));
+    try {
+        res.type('text/html');
+        res.status(200);
+        fetchFacts()
+            .then(data => {
+                const facts = data.data;
+                return res.render('facts', {facts});
+            });
+    } catch (e) {
+        res.status(500).send('Internal Server Error');
+    }
 });
 app.get('/groups', async (req, res) => {
     try {
@@ -66,7 +78,6 @@ app.get('/groups', async (req, res) => {
 
         res.render('groups', {groups: breedsByGroup});
     } catch (e) {
-        console.log(e);
         res.status(500).send('Internal Server Error');
     }
 });
